@@ -1,84 +1,60 @@
-import client from "./assets/pessoas.jpg";
-import loja from "./assets/lojas.jpg";
-import vendedor from "./assets/vendedor.jpg";
-import produtos from "./assets/produtos.jpg";
-import vendas from "./assets/vendas.jpg";
-import { useNavigate } from "react-router-dom";
+import Card from "./components/Card/Card";
+import { cardsData } from "./_mocks_/Default";
+import logo from "./assets/logo-white.svg";
 
 function App() {
-  const navigate = useNavigate();
-
-  const handleNext = (url: string) => {
-    setTimeout(() => {
-      navigate(url);
-    }, 500);
-  };
-
   return (
-    <div className="grid grid-cols-5 md:grid-cols-3 gap-3">
-      <figure
-        onClick={() => handleNext("/cliente")}
-        className="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
+    <div className="w-full h-screen max-w-none bg-[#DDEEEB] flex flex-col">
+      <header
+        className="
+          bg-[#488C82]          
+          p-4                  
+          sm:px-8               
+          lg:px-16              
+          flex
+          flex-rows                 
+          items-center          
+          shadow-xl             
+          sticky                
+          top-0
+          justify-center
+          gap-[1.5vw]
+      "
       >
-        <a>
+        <div className="flex items-center space-x-3 sm:space-x-4">
           <img
-            src={client}
-            className="relative h-auto max-w-full"
-            alt="Vite logo"
+            className="w-sm h-5 w-sm sm:h-10 object-contain"
+            src={logo}
+            alt="image description"
           />
-        </a>
-        <figcaption className="absolute z-50 px-4 text-lg text-white bottom-6">
-          <p>Cliente</p>
-        </figcaption>
-      </figure>
+        </div>
+        <h1 className="text-[#FFFFFF] text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wide">
+          Sistema de vendas
+        </h1>
+      </header>
 
-      <figure
-        onClick={() => handleNext("/loja")}
-        className="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-      >
-        <a href="https://vite.dev">
-          <img src={loja} className="h-auto max-w-full" alt="Vite logo" />
-        </a>
-        <figcaption className="absolute px-4 text-center text-lg text-white bottom-6">
-          <p>Lojas</p>
-        </figcaption>
-      </figure>
-
-      <figure
-        onClick={() => handleNext("/vendedor")}
-        className="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-      >
-        <a href="https://vite.dev">
-          <img src={vendedor} className="h-auto max-w-full" alt="Vite logo" />
-        </a>
-        <figcaption className="absolute px-4 text-lg text-white bottom-6">
-          <p>Vendedor</p>
-        </figcaption>
-      </figure>
-
-      <figure
-        onClick={() => handleNext("/produtos")}
-        className="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-      >
-        <a href="https://vite.dev">
-          <img src={produtos} className="h-auto max-w-full" alt="Vite logo" />
-        </a>
-        <figcaption className="absolute px-4 text-lg text-white bottom-6">
-          <p>Produtos</p>
-        </figcaption>
-      </figure>
-
-      <figure
-        onClick={() => handleNext("/vendas")}
-        className="relative max-w-sm transition-all duration-300 cursor-pointer filter grayscale hover:grayscale-0"
-      >
-        <a href="https://vite.dev">
-          <img src={vendas} className="h-auto max-w-full" alt="Vite logo" />
-        </a>
-        <figcaption className="absolute px-4 text-lg text-white bottom-6">
-          <p>Vendas</p>
-        </figcaption>
-      </figure>
+      <main className="flex-grow p-[6vh] sm:p-[4vh] lg:p-[10vh]">
+        <div
+          className="
+            flex
+            flex-row
+            flex-wrap
+            justify-items-center 
+            animate-fade-in
+            justify-evenly
+            gap-[5vw]
+          "
+        >
+          {cardsData.map((card) => (
+            <Card
+              imageSrc={card.image}
+              text={card.text}
+              key={card.id}
+              route={card.route}
+            />
+          ))}
+        </div>
+      </main>
     </div>
   );
 }
