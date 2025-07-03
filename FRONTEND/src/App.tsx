@@ -1,8 +1,11 @@
-import Card from "./components/Card/Card";
-import { cardsData } from "./_mocks_/Default";
+import type { ReactNode } from "react";
 import logo from "./assets/logo-white.svg";
 
-function App() {
+interface AppProps {
+  children: ReactNode;
+}
+
+const App: React.FC<AppProps> = ({ children }) => {
   return (
     <div className="w-full h-screen max-w-none bg-[#DDEEEB] flex flex-col">
       <header
@@ -33,30 +36,9 @@ function App() {
         </h1>
       </header>
 
-      <main className="flex-grow p-[6vh] sm:p-[4vh] lg:p-[10vh]">
-        <div
-          className="
-            flex
-            flex-row
-            flex-wrap
-            justify-items-center 
-            animate-fade-in
-            justify-evenly
-            gap-[5vw]
-          "
-        >
-          {cardsData.map((card) => (
-            <Card
-              imageSrc={card.image}
-              text={card.text}
-              key={card.id}
-              route={card.route}
-            />
-          ))}
-        </div>
-      </main>
+      {children}
     </div>
   );
-}
+};
 
 export default App;

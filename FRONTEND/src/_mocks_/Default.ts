@@ -37,13 +37,30 @@ const cardsData = [
   },
 ];
 
-interface TableDataItem {
-  id: string; // Usaremos UUIDs para IDs únicos
-  nome: string;
+interface DataShopItem {
+  id?: string;
+  id_shop?: string;
+  name: string;
+  cnpj: string;
+  cep: string;
+  address: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  updated_at?: string;
+  created_at?: string;
+}
+
+interface DataClientItem {
+  id?: string;
+  id_client?: string;
+  name: string;
+  cpf: string;
+  gender: string;
   email: string;
-  telefone: string;
-  [key: string]: string; // Para acesso dinâmico às chaves
+  updated_at?: string;
+  created_at?: string;
 }
 
 export { cardsData };
-export type { TableDataItem };
+export type { DataShopItem, DataClientItem };
