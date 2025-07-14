@@ -1,49 +1,58 @@
 import React, { useState, useEffect } from "react";
 import Modal from "./Modal";
-import type { TableDataItem } from "../../_mocks_/Default";
-import { v4 as uuidv4 } from "uuid";
-import SeachCEP from "../../services/Address";
 
-interface AddEditModalProps {
+interface AddEditModalProps<T> {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: TableDataItem) => void;
+  onSave: (data: T) => void;
+  onSearchAddress?: (cep: string) => Promise<Partial<T>>;
+  initialData: T;
+  children: (
+    formData: T,
+    handleChange: (
+      e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void,
+    handleSearchAddress?: () => void
+  ) => React.ReactNode;
 }
 
-const AddEditModal: React.FC<AddEditModalProps> = ({
+const AddEditModal = <T extends Record<string, any>>({
   isOpen,
   onClose,
   onSave,
-}) => {
-  const [formData, setFormData] = useState<TableDataItem>({});
+  children,
+  onSearchAddress,
+  initialData,
+}: AddEditModalProps<T>) => {
+  const [formData, setFormData] = useState<T>(initialData);
 
   useEffect(() => {
-    setFormData({
-      id_shop: uuidv4(),
-      name: "",
-      cnpj: "",
-      cep: "",
-      address: "",
-      neighborhood: "",
-      city: "",
-      state: "",
-    });
-  }, [isOpen]); // Reinicia o formulário quando o modal abre ou initialData muda
+    setFormData(initialData);
+  }, [isOpen, initialData]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name as keyof T]: value,
+    }));
   };
 
   const handleSearchAddress = async () => {
-    const { rua, endereco, cidade, uf } = await SeachCEP(formData.cep);
-    setFormData((prev) => ({
-      ...prev,
-      address: endereco,
-      neighborhood: rua,
-      city: cidade,
-      state: uf,
-    }));
+    if (!onSearchAddress) return;
+
+    try {
+      console.log("buscando cep", formData.cep);
+      const result = await onSearchAddress(formData.cep);
+      setFormData((prev) => ({
+        ...prev,
+        ...result,
+      }));
+    } catch (error) {
+      console.error("Erro ao buscar endereço:", error);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -54,139 +63,10 @@ const AddEditModal: React.FC<AddEditModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="min-w-[80vh] shadow">
-      <form onSubmit={handleSubmit} className="pt-[8vh] px-[4vh] space-[0.8vh]">
-        <div className="flex flex-col">
-          <label
-            htmlFor="name"
-            className="block mb-[0.6vh] text-sm font-medium text-[#1e2939]"
-          >
-            Nome
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
-            placeholder="John"
-            required
-          />
-        </div>
-        <div className="flex flex-col">
-          <label
-            htmlFor="cnpj"
-            className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
-          >
-            CNPJ
-          </label>
-          <input
-            type="text"
-            id="cnpj"
-            name="cnpj"
-            maxLength={14}
-            value={formData.cnpj}
-            onChange={handleChange}
-            className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
-            placeholder="xx.xxx.xxx/xxxx-xx"
-            required
-          />
-        </div>
-        <div className="flex items-center space-x-[5vh]">
-          <div className="flex flex-col">
-            <label
-              htmlFor="cep"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              CEP
-            </label>
-            <input
-              type="text"
-              id="cep"
-              name="cep"
-              max={8}
-              value={formData.cep}
-              onChange={handleChange}
-              onBlur={handleSearchAddress}
-              className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
-              required
-            />
-          </div>
-        </div>
-        <div className="flex items-center space-x-[5vh]">
-          <div className="flex flex-col">
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
-            >
-              Endereço
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] w-full block p-[1.5vh]"
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label
-              htmlFor="neighborhood"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Logradouro
-            </label>
-            <input
-              type="text"
-              id="neighborhood"
-              name="neighborhood"
-              value={formData.neighborhood}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
-              required
-            />
-          </div>
-        </div>
-        <div className="flex items-center space-x-[5vh]">
-          <div className="flex flex-col">
-            <label
-              htmlFor="city"
-              className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
-            >
-              Cidade
-            </label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              value={formData.city}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] w-full block p-[1.5vh]"
-              required
-            />
-          </div>
-          <div className="flex flex-col">
-            <label
-              htmlFor="state"
-              className="block text-sm font-medium text-gray-700 mb-1"
-            >
-              Estado
-            </label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
-              required
-            />
-          </div>
-        </div>
+      <form onSubmit={handleSubmit} className="pt-[8vh] px-[4vh] space-[1.2vh]">
+        {children(formData, handleChange, handleSearchAddress)}
         <div className="flex flex-col mt-[1vh]">
-          <div className="flex justify-end space-x-[2vh]">
+          <div className="flex justify-end space-x-[2vh] mt-[1.5vh]">
             <button
               type="button"
               onClick={onClose}

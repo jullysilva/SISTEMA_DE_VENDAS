@@ -11,6 +11,7 @@ import {
   updateShop,
 } from "../services/Shops";
 import App from "../App";
+import SeachCEP from "../services/Address";
 
 const Lojas: React.FC = () => {
   const [data, setData] = useState<DataShopItem[]>([]);
@@ -21,7 +22,7 @@ const Lojas: React.FC = () => {
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Você pode ajustar quantos itens por página deseja
+  const itemsPerPage = 3; // Você pode ajustar quantos itens por página deseja
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -97,13 +98,23 @@ const Lojas: React.FC = () => {
   };
 
   const handleEditClick = (item: DataShopItem) => {
-    setItemToEdit(item);
     handleAddEditSave(item);
   };
 
   const handleAddClick = () => {
     setItemToEdit(null);
     setIsAddEditModalOpen(true);
+  };
+
+  const handleSearchAddressCEP = async (cep: string) => {
+    console.log("buscando cep", cep);
+    const { rua, endereco, cidade, uf } = await SeachCEP(cep);
+    return {
+      address: endereco,
+      neighborhood: rua,
+      city: cidade,
+      state: uf,
+    };
   };
 
   return (
@@ -126,7 +137,7 @@ const Lojas: React.FC = () => {
 
           {/* Tabela */}
           <>
-            <Table
+            <Table<DataShopItem>
               data={currentItems}
               columns={tableColumns}
               onEdit={handleEditClick}
@@ -197,7 +208,153 @@ const Lojas: React.FC = () => {
             isOpen={isAddEditModalOpen}
             onClose={() => setIsAddEditModalOpen(false)}
             onSave={handleAddEditSave}
-          />
+            onSearchAddress={handleSearchAddressCEP}
+            initialData={{
+              id: "",
+              name: "",
+              cnpj: "",
+              cep: "",
+              address: "",
+              neighborhood: "",
+              city: "",
+              state: "",
+            }}
+          >
+            {(formData, handleChange, handleSearchAddress) => (
+              <>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="name"
+                    className="block mb-[0.6vh] text-sm font-medium text-[#1e2939]"
+                  >
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="cnpj"
+                    className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
+                  >
+                    CNPJ
+                  </label>
+                  <input
+                    type="text"
+                    id="cnpj"
+                    name="cnpj"
+                    maxLength={14}
+                    value={formData.cnpj}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    placeholder="xx.xxx.xxx/xxxx-xx"
+                    required
+                  />
+                </div>
+                <div className="flex items-center space-x-[5vh]">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="cep"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      CEP
+                    </label>
+                    <input
+                      type="text"
+                      id="cep"
+                      name="cep"
+                      max={8}
+                      value={formData.cep}
+                      onChange={handleChange}
+                      onBlur={handleSearchAddress}
+                      className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-[5vh]">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
+                    >
+                      Endereço
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                      className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] w-full block p-[1.5vh]"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="neighborhood"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Logradouro
+                    </label>
+                    <input
+                      type="text"
+                      id="neighborhood"
+                      name="neighborhood"
+                      value={formData.neighborhood}
+                      onChange={handleChange}
+                      className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center space-x-[5vh]">
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="city"
+                      className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
+                    >
+                      Cidade
+                    </label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] w-full block p-[1.5vh]"
+                      required
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="state"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Estado
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      value={formData.state}
+                      onChange={handleChange}
+                      className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block w-full p-[1.5vh]"
+                      required
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+          </AddEditModal>
 
           <ConfirmModal
             isOpen={isConfirmModalOpen}

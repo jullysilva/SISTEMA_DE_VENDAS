@@ -21,7 +21,7 @@ const Client: React.FC = () => {
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5; // Você pode ajustar quantos itens por página deseja
+  const itemsPerPage = 3; // Você pode ajustar quantos itens por página deseja
 
   const totalPages = Math.ceil(data.length / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -123,7 +123,7 @@ const Client: React.FC = () => {
 
           {/* Tabela */}
           <>
-            <Table
+            <Table<DataClientItem>
               data={currentItems}
               columns={tableColumns}
               onEdit={handleEditClick}
@@ -194,7 +194,96 @@ const Client: React.FC = () => {
             isOpen={isAddEditModalOpen}
             onClose={() => setIsAddEditModalOpen(false)}
             onSave={handleAddEditSave}
-          />
+            initialData={{
+              id: "",
+              name: "",
+              cpf: "",
+              email: "",
+              gender: "feminino",
+            }}
+          >
+            {(formData, handleChange) => (
+              <>
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="name"
+                    className="block mb-[0.6vh] text-sm font-medium text-[#1e2939]"
+                  >
+                    Nome
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    placeholder="John"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="cpf"
+                    className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
+                  >
+                    CPF
+                  </label>
+                  <input
+                    type="text"
+                    id="cpf"
+                    name="cpf"
+                    maxLength={14}
+                    value={formData.cpf}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    placeholder="xxx.xxx.xxx-xx"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    required
+                  />
+                </div>
+
+                <div className="flex flex-col">
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium text-gray-700 mb-[0.6vh]"
+                  >
+                    Gênero
+                  </label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="bg-gray-50 border border-gray-300 text-[#1e2939] text-sm rounded-[1vh] focus:ring-[#2b7fff] focus:border-[#2b7fff] block p-[1.5vh]"
+                    required
+                  >
+                    <option value="feminino">Feminino</option>
+                    <option value="masculino">Masculino</option>
+                    <option value="outro">Outro</option>
+                  </select>
+                </div>
+              </>
+            )}
+          </AddEditModal>
 
           <ConfirmModal
             isOpen={isConfirmModalOpen}
