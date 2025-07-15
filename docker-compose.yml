@@ -1,28 +1,30 @@
 version: "3.9"
 
 services:
-    laravelapp:
-        container_name: laravelapp
-        image: acer/laravelapp
-        build: .
-        ports:
-            - "8000:8000"
-        env_file:
-            - .env
-        depends_on:
-            - db
+  laravelapp:
+    container_name: laravelapp
+    image: acer/laravelapp
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - db
+    env_file:
+      - ./backend/.env
 
-    db:
-        container_name: db
-        image: postgres:12
-        ports:
-            - "5432:5432"
-        environment:
-            - POSTGRES_USER=postgres
-            - POSTGRES_PASSWORD=postgres
-            - POSTGRES_DB=postgres
-        volumes:
-            - pgdata:/var/lib/postgresql/data
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
 
 volumes:
-    pgdata: {}
+  pgdata: {}

@@ -11,9 +11,9 @@ class Shop extends Model
 
     protected $fillable = ["name", "cnpj", "cep", "address", "neighborhood", "city", "state"];
 
-    public function vendedores()
+    public function sellers()
     {
-        return $this->hasMany(Seller::class);
+        return $this->hasMany(Seller::class, 'id_shop');
     }
 
     public function vendas()

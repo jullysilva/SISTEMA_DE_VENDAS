@@ -12,7 +12,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request){
 
     return $request->user();
 });
-
+Route::get('/', function () {
+    return redirect('/documentacao-api'); // Altere para o caminho da sua documentação
+});
 // CRUD of the Clients
 Route::get('/clients', [ClientController::class, 'index']);
 Route::post('/clients', [ClientController::class, 'store']);

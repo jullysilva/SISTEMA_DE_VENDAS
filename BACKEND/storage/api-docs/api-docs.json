@@ -1,0 +1,961 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Laravel CRUD",
+        "description": "Documentação da API Laravel CRUD",
+        "contact": {
+            "email": "seu-email@dominio.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/clients": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Listar todos os clientes",
+                "operationId": "d00d20521584ab5da83e088abb7aded2",
+                "responses": {
+                    "200": {
+                        "description": "Lista de clientes retornada com sucesso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Criar um novo cliente",
+                "operationId": "f1e86e5b79fedfa6593067977292b13b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "cpf",
+                                    "gender",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Maria Silva"
+                                    },
+                                    "cpf": {
+                                        "type": "string",
+                                        "example": "123.456.789-00"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "feminino"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "maria@email.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cliente criado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/clients/{client}": {
+            "get": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Exibir um cliente específico",
+                "operationId": "e1b94279234de95a7144b78642cd2e45",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "description": "ID do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cliente encontrado com sucesso"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Atualizar um cliente",
+                "operationId": "0c9a2108c7f6120cd8c12ece56a85b74",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "description": "ID do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "cpf",
+                                    "gender",
+                                    "email"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Maria Silva"
+                                    },
+                                    "cpf": {
+                                        "type": "string",
+                                        "example": "123.456.789-00"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "feminino"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "maria@email.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Cliente atualizado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Clients"
+                ],
+                "summary": "Excluir um cliente",
+                "operationId": "2d450bfd555b490e7e9cdd602d1db8e3",
+                "parameters": [
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "description": "ID do cliente",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Cliente excluído com sucesso"
+                    },
+                    "404": {
+                        "description": "Cliente não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Listar todos os produtos",
+                "operationId": "1bfaa78d1c2c3848ab8165c5dadcad3e",
+                "responses": {
+                    "200": {
+                        "description": "Lista de produtos retornada com sucesso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Criar um novo produto",
+                "operationId": "e8185e307706e2cd84bbcf5171e2f09d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "color",
+                                    "price"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Notebook Gamer"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Preto"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "3499.99"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Produto criado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/products/{product}": {
+            "get": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Exibir um produto específico",
+                "operationId": "05f6ffcb49f47b4f4fc1a1c21ed60011",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "ID do produto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Produto retornado com sucesso"
+                    },
+                    "404": {
+                        "description": "Produto não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Atualizar um produto",
+                "operationId": "c474d1318e5b8c3de1f4d52b6053111f",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "ID do produto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Notebook Atualizado"
+                                    },
+                                    "color": {
+                                        "type": "string",
+                                        "example": "Cinza"
+                                    },
+                                    "price": {
+                                        "type": "string",
+                                        "example": "2999.99"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Produto atualizado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Deletar um produto",
+                "operationId": "1a0a353d0842ff4f9347bb66ec53e3ea",
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "description": "ID do produto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Produto deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Produto não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/sales": {
+            "get": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Listar todas as vendas com relacionamentos",
+                "operationId": "419ebb078c83262b05f7c639ae8b2c21",
+                "responses": {
+                    "200": {
+                        "description": "Lista de vendas retornada com sucesso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Criar uma nova venda",
+                "operationId": "51f42c056032d143981f26f6c0888f24",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_client",
+                                    "id_shop",
+                                    "id_seller",
+                                    "date_sale",
+                                    "value_total",
+                                    "payment_method",
+                                    "products"
+                                ],
+                                "properties": {
+                                    "id_client": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "id_shop": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "id_seller": {
+                                        "type": "integer",
+                                        "example": 3
+                                    },
+                                    "date_sale": {
+                                        "type": "string",
+                                        "example": "2025-07-15"
+                                    },
+                                    "value_total": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 199.9
+                                    },
+                                    "obs": {
+                                        "type": "string",
+                                        "example": "Venda com desconto"
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Dinheiro",
+                                            "Crédito",
+                                            "Débito"
+                                        ],
+                                        "example": "Crédito"
+                                    },
+                                    "products": {
+                                        "type": "array",
+                                        "items": {
+                                            "required": [
+                                                "id",
+                                                "quantity"
+                                            ],
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Venda criada com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/sales/{sale}": {
+            "get": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Visualizar uma venda específica com detalhes",
+                "operationId": "e72b118331036aff4e9f004a7b403138",
+                "parameters": [
+                    {
+                        "name": "sale",
+                        "in": "path",
+                        "description": "ID da venda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Venda retornada com sucesso"
+                    },
+                    "404": {
+                        "description": "Venda não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Atualizar informações de uma venda",
+                "operationId": "5388b7e083e529ecc6828b1f99da7bf3",
+                "parameters": [
+                    {
+                        "name": "sale",
+                        "in": "path",
+                        "description": "ID da venda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "date_seller",
+                                    "value_total",
+                                    "payment_method"
+                                ],
+                                "properties": {
+                                    "date_seller": {
+                                        "type": "string",
+                                        "example": "2025-07-20"
+                                    },
+                                    "value_total": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 299.9
+                                    },
+                                    "obs": {
+                                        "type": "string",
+                                        "example": "Atualizado pela gerência"
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "enum": [
+                                            "Dinheiro",
+                                            "Credito",
+                                            "Debito"
+                                        ],
+                                        "example": "Dinheiro"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Venda atualizada com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Sales"
+                ],
+                "summary": "Deletar uma venda",
+                "operationId": "8381c5f5204ca5aa86f0e97d75a15644",
+                "parameters": [
+                    {
+                        "name": "sale",
+                        "in": "path",
+                        "description": "ID da venda",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Venda deletada com sucesso"
+                    },
+                    "404": {
+                        "description": "Venda não encontrada"
+                    }
+                }
+            }
+        },
+        "/api/sellers": {
+            "get": {
+                "tags": [
+                    "Sellers"
+                ],
+                "summary": "Listar todos os vendedores com suas lojas",
+                "operationId": "6768a646cebc6baa1b2396f48fac0e10",
+                "responses": {
+                    "200": {
+                        "description": "Lista de vendedores retornada com sucesso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Sellers"
+                ],
+                "summary": "Criar um novo vendedor",
+                "operationId": "9249d06f0fbe023b9dfb798a4a842da3",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id_shop",
+                                    "name",
+                                    "cpf"
+                                ],
+                                "properties": {
+                                    "id_shop": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "João da Silva"
+                                    },
+                                    "cpf": {
+                                        "type": "string",
+                                        "example": "123.456.789-00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vendedor criado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/sellers/{seller}": {
+            "get": {
+                "tags": [
+                    "Sellers"
+                ],
+                "summary": "Obter detalhes de um vendedor específico",
+                "operationId": "5ad7c3f831845b3a55b6424bd8d1e740",
+                "parameters": [
+                    {
+                        "name": "seller",
+                        "in": "path",
+                        "description": "ID do vendedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vendedor retornado com sucesso"
+                    },
+                    "404": {
+                        "description": "Vendedor não encontrado"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Sellers"
+                ],
+                "summary": "Atualizar dados de um vendedor",
+                "operationId": "4f29ed596ff352c6c60a0a72013d9846",
+                "parameters": [
+                    {
+                        "name": "seller",
+                        "in": "path",
+                        "description": "ID do vendedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "João Atualizado"
+                                    },
+                                    "cpf": {
+                                        "type": "string",
+                                        "example": "987.654.321-00"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vendedor atualizado com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Sellers"
+                ],
+                "summary": "Deletar um vendedor",
+                "operationId": "513eb36fc81f3789f9bbf92aed8f27fc",
+                "parameters": [
+                    {
+                        "name": "seller",
+                        "in": "path",
+                        "description": "ID do vendedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Vendedor deletado com sucesso"
+                    },
+                    "404": {
+                        "description": "Vendedor não encontrado"
+                    }
+                }
+            }
+        },
+        "/api/shops": {
+            "get": {
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "Listar todas as lojas",
+                "operationId": "811428430320080e8bdf49e15e1352fb",
+                "responses": {
+                    "200": {
+                        "description": "Lista de lojas retornada com sucesso"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "Criar uma nova loja",
+                "operationId": "eefcf4c24ec6cf6cd3f50d507d3afb02",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "cnpj",
+                                    "cep",
+                                    "address",
+                                    "neighborhood",
+                                    "city",
+                                    "state"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Loja Central"
+                                    },
+                                    "cnpj": {
+                                        "type": "string",
+                                        "example": "12.345.678/0001-99"
+                                    },
+                                    "cep": {
+                                        "type": "string",
+                                        "example": "30100-000"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Rua das Flores, 100"
+                                    },
+                                    "neighborhood": {
+                                        "type": "string",
+                                        "example": "Centro"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Belo Horizonte"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "MG"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Loja criada com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            }
+        },
+        "/api/shops/{shop}": {
+            "get": {
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "Exibir uma loja específica",
+                "operationId": "6465c42094d92d53b51c143ab2d37e37",
+                "parameters": [
+                    {
+                        "name": "shop",
+                        "in": "path",
+                        "description": "ID da loja",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Loja encontrada com sucesso"
+                    },
+                    "404": {
+                        "description": "Loja não encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "Atualizar uma loja",
+                "operationId": "dd26e715c342092056e0adfea5738613",
+                "parameters": [
+                    {
+                        "name": "shop",
+                        "in": "path",
+                        "description": "ID da loja",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "cnpj",
+                                    "cep",
+                                    "address",
+                                    "neighborhood",
+                                    "city",
+                                    "state"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Loja Atualizada"
+                                    },
+                                    "cnpj": {
+                                        "type": "string",
+                                        "example": "98.765.432/0001-88"
+                                    },
+                                    "cep": {
+                                        "type": "string",
+                                        "example": "30130-000"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Av. Amazonas, 200"
+                                    },
+                                    "neighborhood": {
+                                        "type": "string",
+                                        "example": "Savassi"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Belo Horizonte"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "MG"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Loja atualizada com sucesso"
+                    },
+                    "422": {
+                        "description": "Erro de validação"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Shops"
+                ],
+                "summary": "Excluir uma loja",
+                "operationId": "db7ad626e17c631edea38504dbca8259",
+                "parameters": [
+                    {
+                        "name": "shop",
+                        "in": "path",
+                        "description": "ID da loja",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Loja excluída com sucesso"
+                    },
+                    "404": {
+                        "description": "Loja não encontrada"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Clients",
+            "description": "Clients"
+        },
+        {
+            "name": "Products",
+            "description": "Products"
+        },
+        {
+            "name": "Sales",
+            "description": "Sales"
+        },
+        {
+            "name": "Sellers",
+            "description": "Sellers"
+        },
+        {
+            "name": "Shops",
+            "description": "Shops"
+        }
+    ]
+}

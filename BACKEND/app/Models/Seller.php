@@ -12,12 +12,7 @@ class Seller extends Model
         'cpf',
     ];
 
-    public function shop() {
-        return $this->belongsTo(Shop::class);
-    }
-
-    public function vendas()
-    {
-        return $this->hasMany(Sale::class);
+    public function shops() {
+        return $this->belongsTo(Shop::class, 'id_shop');
     }
 }
