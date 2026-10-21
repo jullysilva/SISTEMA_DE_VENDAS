@@ -19,7 +19,7 @@ Sales management system with a **Laravel** REST API and a **React + TypeScript**
 .
 ├── BACKEND/            # Laravel API (controllers, models, migrations, Swagger)
 ├── FRONTEND/           # React + Vite SPA
-├── docker-compose.yml  # API + PostgreSQL
+├── docker-compose.yml  # API + front end + PostgreSQL
 └── .github/workflows/  # tests, changelog and issue/PR automations
 ```
 
@@ -39,25 +39,29 @@ Interactive documentation (Swagger) is available at `http://localhost:8000/docum
 
 ## Getting started
 
-### Requirements
+### With Docker (recommended)
 
-- Docker and Docker Compose
-- Node.js 18+ (for the front end)
-
-### Back end + database
+Requirement: **Docker** and **Docker Compose**.
 
 ```bash
-cp BACKEND/.env.example BACKEND/.env   # set DB_HOST=db, DB_USERNAME/DB_PASSWORD=postgres
+cp BACKEND/.env.example BACKEND/.env
 docker compose up --build -d
 docker exec laravelapp php artisan key:generate
 docker exec laravelapp php artisan migrate
 ```
 
-The API runs at `http://localhost:8000/api`.
+Database variables are already set by `docker-compose.yml`, so there is no need to edit them in `.env`.
 
-> ⚠️ `docker-compose.yml` references `./backend` in lowercase. On Linux it must be changed to `./BACKEND` (see [#2](https://github.com/jullysilva/SISTEMA_DE_VENDAS/issues/2)).
+| Service | URL |
+|---|---|
+| Front end | `http://localhost:5173` |
+| API | `http://localhost:8000/api` |
+| Swagger | `http://localhost:8000/documentacao-api` |
+| PostgreSQL | `localhost:5432` (user/password `postgres`) |
 
-### Front end
+### Front end without Docker
+
+Requirement: **Node.js 18+**.
 
 ```bash
 cd FRONTEND

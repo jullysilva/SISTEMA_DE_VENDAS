@@ -19,7 +19,7 @@ Sistema de gestão de vendas com uma API REST em **Laravel** e um front-end em *
 .
 ├── BACKEND/            # API Laravel (controllers, models, migrations, Swagger)
 ├── FRONTEND/           # SPA React + Vite
-├── docker-compose.yml  # API + PostgreSQL
+├── docker-compose.yml  # API + front-end + PostgreSQL
 └── .github/workflows/  # testes, changelog e automações de issues/PRs
 ```
 
@@ -39,25 +39,29 @@ A documentação interativa (Swagger) fica disponível em `http://localhost:8000
 
 ## Como rodar
 
-### Pré-requisitos
+### Com Docker (recomendado)
 
-- Docker e Docker Compose
-- Node.js 18+ (para o front-end)
-
-### Back-end + banco
+Pré-requisito: **Docker** e **Docker Compose**.
 
 ```bash
-cp BACKEND/.env.example BACKEND/.env   # ajuste DB_HOST=db, DB_USERNAME/DB_PASSWORD=postgres
+cp BACKEND/.env.example BACKEND/.env
 docker compose up --build -d
 docker exec laravelapp php artisan key:generate
 docker exec laravelapp php artisan migrate
 ```
 
-A API sobe em `http://localhost:8000/api`.
+As variáveis de banco já são definidas pelo `docker-compose.yml`, então não é preciso editá-las no `.env`.
 
-> ⚠️ O `docker-compose.yml` referencia `./backend` em minúsculas. Em Linux é preciso ajustar para `./BACKEND` (ver [#2](https://github.com/jullysilva/SISTEMA_DE_VENDAS/issues/2)).
+| Serviço | URL |
+|---|---|
+| Front-end | `http://localhost:5173` |
+| API | `http://localhost:8000/api` |
+| Swagger | `http://localhost:8000/documentacao-api` |
+| PostgreSQL | `localhost:5432` (usuário/senha `postgres`) |
 
-### Front-end
+### Front-end sem Docker
+
+Pré-requisito: **Node.js 18+**.
 
 ```bash
 cd FRONTEND
